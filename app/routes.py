@@ -86,7 +86,6 @@ def logout():
 
 
 @app.route('/sendMessage', methods=['POST', 'GET'])
-@cross_origin()
 def sendMessage():
     if request.json and request.json['token']:
         tokenIsValid = authentication.verifyTokenValid(request.json['token'])
