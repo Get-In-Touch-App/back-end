@@ -90,12 +90,15 @@ def sendMessage():
     if request.json and request.json['token']:
         tokenIsValid = authentication.verifyTokenValid(request.json['token'])
         if tokenIsValid:
-            message = request.json['message']
-            receiver = request.json['receiver']
-            sender = session['userId']
-            return api.sendMessage(message, sender, receiver)
+            if(request.json['message'] and request.json['receiver']):
+                message = request.json['message']
+                receiver = request.json['receiver']
+                sender = tokenIsValid
+                return api.sendMessage(message, sender, receiver)
+            else:
+                return {"Error": "we need token, message, receiver and sender to successfully send message"}
         else:
-            return {"error":"Token is invalid"}
+            return {"Error":"Token is invalid"}
 
     if session and session['isLoggedIn']:
         if(request.json and request.json['message'] and request.json['receiver']):
