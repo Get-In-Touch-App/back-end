@@ -135,7 +135,7 @@ def sendMessageViaEmail(content, sender, receiver):
             cursor.execute(sql, (sender,))
             sender = cursor.fetchone()[0]
             # Message = "!!!Urgent Message from john doe: " + 
-            message = "!!!Urgent message from " + str(sender) + " " +  str(content)
+            message = "Subject: !!!Urgent message from " + str(sender) + "  \n" +  str(content)
             print (message)
             server.sendmail(gmail_user, email, message)
             print(gmail_user, email, message)
