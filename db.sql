@@ -16,14 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `getAholdOfMe`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `getaholdofme` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `getAholdOfMe`;
-
---
 -- Table structure for table `contactmethodflags`
 --
 
@@ -62,7 +54,7 @@ CREATE TABLE `messages` (
   `receiver` int(11) DEFAULT NULL,
   `dateTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,8 +63,34 @@ CREATE TABLE `messages` (
 
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-INSERT INTO `messages` VALUES (1,'Urgent !!! the cat is out of the bag',1,3,NULL),(2,'Urgent !!! the cat is out of the bag',1,2,NULL),(3,'Urgent !!! the cat is out of the bag',1,4,NULL),(4,'here\'s a message pal',1,2,NULL),(5,'here\'s another message friend',1,2,NULL);
+INSERT INTO `messages` VALUES (1,'Urgent !!! the cat is out of the bag',1,3,NULL),(2,'Urgent !!! the cat is out of the bag',1,2,NULL),(3,'Urgent !!! the cat is out of the bag',1,4,NULL),(4,'here\'s a message pal',1,2,NULL),(5,'here\'s another message friend',1,2,NULL),(6,'heres a message for ya',1,1,NULL),(7,'heres a message for ya',1,1,NULL),(8,'heres a message for ya',1,1,NULL),(9,'heres a message for ya',1,1,NULL),(10,'heres a message for ya',1,1,NULL),(11,'heres a message for ya',1,1,NULL),(12,'heres a message for ya',1,1,NULL),(13,'heres a message for ya',1,1,NULL),(14,'heres a message for ya',1,1,NULL),(15,'heres a message for ya',1,1,NULL),(16,'heres a message for ya pt 2',1,1,NULL),(17,'heres a message for ya pt 32',1,1,NULL),(18,'heres a message for ya pt 32',1,2,NULL),(19,'heres a message for ya pt 32',1,3,NULL),(20,'heres a message for ya pt 32',1,3,NULL),(21,'heres a message for ya pt 32',1,1,NULL),(22,'heres a message for ya pt 32',1,1,NULL),(23,'heres a message for ya pt 32',1,1,NULL),(24,'heres a message for ya pt 32',1,1,NULL),(25,'heres a message for ya pt 32',1,1,NULL),(26,'heres a message for ya pt 32',1,1,NULL),(27,'heres a message for ya pt 32',1,1,NULL),(28,'Look an email',1,1,NULL),(29,'Look an email',1,1,NULL),(30,'Look an email from a me mail',1,1,NULL),(31,'Look an email from a me mail',1,1,NULL),(32,'Look an email from a me mail',1,1,NULL),(33,'Look an email from a me mail',1,1,NULL),(34,'Look an email from a me mail',1,1,NULL),(35,'Look an email from a me mail',1,1,NULL),(36,'here\'s another message dude',1,3,NULL),(37,'here\'s another message dude',1,3,NULL),(38,'here\'s another message dude',1,1,NULL);
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `token`
+--
+
+DROP TABLE IF EXISTS `token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `token` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `token` varchar(255) DEFAULT NULL,
+  `userID` int(11) DEFAULT NULL,
+  `expiration` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `token`
+--
+
+LOCK TABLES `token` WRITE;
+/*!40000 ALTER TABLE `token` DISABLE KEYS */;
+INSERT INTO `token` VALUES (1,'XVZPOSMOVUJTJUMXIZZPIMVTYQWHWGEOTWXBOFOBCJOXEPCVNKYCAMIJCPAVGDWVPIQHJ',1,1607844139),(2,'YWVBYVTZUDIKKKDIUVPZZHYUAZCLQWPGDEVSOWGNMZVXUACBFWOJSMZXPFPJWONGUKZIL',1,1607845534),(3,'GUEPJWRTWHQTGZAJIYWSKRRTHZQGITNEKIJGQJEDNVNZPEIGWFOUKBSBZBWAVPBUYUKEZ',1,1607845573),(4,'OXNHDXHMUGBIIRDFPZZLRFZOCQRXIHWWPLQMLYJVJORPHIQQZGZMCTIAOTEWFFOSNCDVW',1,1607845597),(5,'QJMWQYRSSQUDJJITDXHDSXWUNWPVFQELIQDGUROCTAQDKLBRFGRTWIIZYENEGDFTCURCR',1,1607845599),(6,'RDXRBYJGWODGWVSRYAHWPNLBGDLLCEPURLBTWBHCHFMJAXHTDHTWENBWHBBGFCDAYAXLT',1,1607845603),(7,'NVWUUUCLJAHEYZNXBONJUEFVOZTDNSXNJAEDMYRSVCHGLLRDRFLDEHILEPVFFCYUVMEPF',1,0);
+/*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -115,4 +133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-05 23:27:45
+-- Dump completed on 2020-12-06  3:19:11
