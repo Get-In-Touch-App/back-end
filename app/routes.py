@@ -136,7 +136,7 @@ def getUserSendMethods(userID):
     else:
         return {"Error":"User Not Logged In"}  
 
-@app.route('/getAllSendMethods')
+@app.route('/getAllSendMethods', methods=['POST', 'GET'])
 def getAllSendMethods():
     if request.json and request.json['token']:
         tokenIsValid = authentication.verifyTokenValid(request.json['token'])
@@ -146,6 +146,40 @@ def getAllSendMethods():
             return {"Error":"Invalid token"}
 
     if session and session['isLoggedIn']:
+        return api.getAllSendMethods()
+    else:
+        return {"Error":"User Not Logged In"}  
+
+@app.route('/editUserInformation', methods=['POST', 'GET'])
+def updateUserInformation():
+    if request.json and request.json['token']:
+        tokenIsValid = authentication.verifyTokenValid(request.json['token'])
+        if tokenIsValid:
+            if(request.json['email'] and request.json['phone'] and request.json['twitter']):
+                email = request.json['email']
+                phone = request.json['phone']
+                twitter = request.json['twitter']
+                userId = tokenIsValid
+                api.editUserInformation(userId, email, phone, twitter)
+        else:
+            return {"Error":"Invalid token"}
+
+    if session and session['isLoggedIn']:
         return api.getSentMessages(userID)
     else:
         return {"Error":"User Not Logged In"}  
+
+@app.route('/getUserInformation', methods=['POST', 'GET'])
+def getUserInformation():
+    if request.json and request.json['token']:
+        tokenIsValid = authentication.verifyTokenValid(request.json['token'])
+        if tokenIsValid:
+            return api.getUserInformation(tokenIsValid)
+        else:
+            return {"Error":"Invalid token"}
+
+    if session and session['isLoggedIn']:
+        return api.getUserInformation()
+    else:
+        return {"Error":"User Not Logged In"}  
+

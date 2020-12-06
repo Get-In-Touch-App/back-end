@@ -65,6 +65,26 @@ def getAllSendMethods():
     else:
         return {"Error":"no send methods available"}
 
+def getUserInformation(userID):
+    db = database.getDB()
+    cursor = db.cursor()
+    sql = "SELECT email, phone, twitter from users where userID = %s"
+    cursor.execute(sql, (userID,))
+    print (sql, userID)
+    returnData = cursor.fetchall()
+    if returnData:
+        items = [dict(zip([key[0] for key in cursor.description], row)) for row in returnData]
+        return str(items)
+    else:
+        return {"Error":"no data available"}
+
+def editUserInformation(userId, email, phone, twitter):
+    db = database.getDB()
+    cursor = db.cursor()
+    sql = "UPDATE users set email = %s, phone = %s, twitter = %s WHERE userID = %s"
+    cursor.execute(sql, (email, phone, twitter, userId))
+    db.commit()
+    return True  
 
 
 def sendViaPreferredMethod(content, sender, receiver):

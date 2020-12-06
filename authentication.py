@@ -39,7 +39,7 @@ def deleteToken(token):
 def verifyTokenValid(token):
     db = database.getDB()
     cursor = db.cursor()
-    sql = "SELECT expiration, id from token where token = %s"
+    sql = "SELECT expiration, userId from token where token = %s"
     cursor.execute(sql, (token,))
     data = cursor.fetchone()
     if data:
