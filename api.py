@@ -41,6 +41,32 @@ def getSentMessages(userID):
     else:
         return {"Error":"no users available"}
 
+def getUserSendMethods(userID):
+    db = database.getDB()
+    cursor = db.cursor()
+    sql = "SELECT a.id, a.contactMethodName, a.contactMethodFlagValue from contactMethodFlags a inner join users b on a.contactMethodFlagValue & b.contactMethodFlags and b.userID = %s"
+    cursor.execute(sql, (userID,))
+    returnData = cursor.fetchall()
+    if returnData:
+        items = [dict(zip([key[0] for key in cursor.description], row)) for row in returnData]
+        return str(items)
+    else:
+        return {"Error":"no send methods available"}
+
+def getAllSendMethods():
+    db = database.getDB()
+    cursor = db.cursor()
+    sql = "SELECT id, contactMethodName, contactMethodFlagValue from contactMethodFlags"
+    cursor.execute(sql)
+    returnData = cursor.fetchall()
+    if returnData:
+        items = [dict(zip([key[0] for key in cursor.description], row)) for row in returnData]
+        return str(items)
+    else:
+        return {"Error":"no send methods available"}
+
+
+
 def sendViaPreferredMethod(content, sender, receiver):
     db = database.getDB()
     cursor = db.cursor()

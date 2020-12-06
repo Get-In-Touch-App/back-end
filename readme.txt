@@ -1,11 +1,7 @@
-import mysql.connector
-
-
-def getDB():
-    db = mysql.connector.connect(host="localhost", user="getAholdOfMe", password="aholdGetter", database="getAholdOfMe")
-    return db
-
-
+These instructions are incomplete but should give you what you need. 
+our software dependencies are:
+    python 3.something
+    mysql latest version (10.something) 
 #sql instructions: 
 #CREATE DATABASe getAholdOfMe
 #CREATE USER 'getAholdOfMe'@'localhost' IDENTIFIED BY 'aholdGetter';

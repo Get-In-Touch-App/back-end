@@ -121,3 +121,31 @@ def getAllMessagesSentByUserID(userID):
         return api.getSentMessages(userID)
     else:
         return {"Error":"User Not Logged In"}  
+
+@app.route('/getUserSendMethods/<int:userID>', methods=['POST', 'GET'])
+def getUserSendMethods(userID):
+    if request.json and request.json['token']:
+        tokenIsValid = authentication.verifyTokenValid(request.json['token'])
+        if tokenIsValid:
+            return api.getUserSendMethods(userID)
+        else:
+            return {"Error":"Invalid token"}
+
+    if session and session['isLoggedIn']:
+        return api.getSentMessages(userID)
+    else:
+        return {"Error":"User Not Logged In"}  
+
+@app.route('/getAllSendMethods')
+def getAllSendMethods():
+    if request.json and request.json['token']:
+        tokenIsValid = authentication.verifyTokenValid(request.json['token'])
+        if tokenIsValid:
+            return api.getAllSendMethods()
+        else:
+            return {"Error":"Invalid token"}
+
+    if session and session['isLoggedIn']:
+        return api.getSentMessages(userID)
+    else:
+        return {"Error":"User Not Logged In"}  
