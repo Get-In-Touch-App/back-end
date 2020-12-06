@@ -49,7 +49,7 @@ def apiLogin():
             session['userId'] = userId;
             token = authentication.generateAndSaveToken(userId)
             # print(token)
-            return {"Login":"Success", "token":token}
+            return {"Login":"Success", "token":token, "userID":userId}
         else:
             return {"Error":"authenticationFailure"}
     else:
@@ -111,16 +111,17 @@ def sendMessage():
     else:
         return {"Error":"User Not Logged In"}
 
-@app.route('/getSentMessages/<int:userID>', methods=['POST', 'GET'])
-def getAllMessagesSentByUserID(userID):
+@app.route('/getSentMessages', methods=['POST', 'GET'])
+def getAllMessagesSentByUserID():
     if request.json and request.json['token']:
         tokenIsValid = authentication.verifyTokenValid(request.json['token'])
         if tokenIsValid:
-            return api.getSentMessages(userID)
+            return api.getSentMessages(tokenIsValid)
         else:
             return {"Error":"Invalid token"}
 
     if session and session['isLoggedIn']:
+        userID = session['userId']
         return api.getSentMessages(userID)
     else:
         return {"Error":"User Not Logged In"}  
