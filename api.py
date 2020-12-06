@@ -66,10 +66,18 @@ def sendViaPreferredMethod(content, sender, receiver):
 
     
 
-def sendMessageViaEmail(content, sender, receiver):
-    db = database.getDB()
-    cursor.db.cursor()
-    sql = "SELECT "
+# def sendMessageViaEmail(content, sender, receiver):
+#     db = database.getDB()
+#     cursor.db.cursor()
+#     sql = "SELECT email from users where userID = %s"
+#     cursor.execute(sql, (receiver,))
+#     data = cursor.fetchone():
+#     if data:
+#         email = data[0]
+
+#     else:
+#         return False
+
 
 # def sendMessageViaText(content, sender, receiver):
 #     db = database.getDB()
