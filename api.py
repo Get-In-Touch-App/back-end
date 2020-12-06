@@ -1,5 +1,6 @@
 import database
 import json
+import smtplib 
 
 def getUsers():
     db = database.getDB()
@@ -14,19 +15,19 @@ def getUsers():
         return {"Error":"no users available"}
 
 def sendMessage(message, sender, receiver):
-    try:
-        db = database.getDB()
-        cursor = db.cursor()
-        sql = "INSERT INTO messages (content, sender, receiver) VALUES (%s, %s, %s)"
-        cursor.execute(sql, (message, sender, receiver))
-        db.commit()
-        messageSent = sendViaPreferredMethod(content, sender, receiver)
-        if messageSent:
-            return {"Send Message":"Success"}
-        else:
-            return {"Error":"Message send failed"}
-    except:
-        return {"Error":"Send message did not update the database"}
+    # try:
+    db = database.getDB()
+    cursor = db.cursor()
+    sql = "INSERT INTO messages (content, sender, receiver) VALUES (%s, %s, %s)"
+    cursor.execute(sql, (message, sender, receiver))
+    db.commit()
+    messageSent = sendViaPreferredMethod(message, sender, receiver)
+    if messageSent:
+        return {"Send Message":"Success"}
+    else:
+        return {"Error":"Message send failed"}
+    # except:
+    #     return {"Error":"Send message did not update the database"}
 
 def getSentMessages(userID):
     db = database.getDB()
@@ -48,8 +49,8 @@ def sendViaPreferredMethod(content, sender, receiver):
     data = cursor.fetchone()
     if data:
         userFlagValue = data[0]
-        sql = "SELECT id, contactMethodName, contactMethodFlagValue FROM contactMethodFlags where contactMethodFlags < %s"
-        cursor.execute(sql, (userFlagValue))
+        sql = "SELECT id, contactMethodName, contactMethodFlagValue FROM contactMethodFlags where contactMethodFlagValue <= %s"
+        cursor.execute(sql, (userFlagValue,))
         availableFlags = cursor.fetchall()
         if availableFlags:
             for x in range(0, len(availableFlags)):
@@ -62,21 +63,44 @@ def sendViaPreferredMethod(content, sender, receiver):
                     #     sendMessageViaVoiceCall(content, sender, receiver)
                     # if availableFlags[x][1] == "twitter DM":
                     #     sendMessageViaTwitterDM(content, sender, receiver)
+        return True
 
 
     
 
-# def sendMessageViaEmail(content, sender, receiver):
-#     db = database.getDB()
-#     cursor.db.cursor()
-#     sql = "SELECT email from users where userID = %s"
-#     cursor.execute(sql, (receiver,))
-#     data = cursor.fetchone():
-#     if data:
-#         email = data[0]
+def sendMessageViaEmail(content, sender, receiver):
+    db = database.getDB()
+    cursor = db.cursor()
+    sql = "SELECT email from users where userID = %s"
+    cursor.execute(sql, (receiver,))
+    data = cursor.fetchone()
+    if data:
+        email = data[0]
+        try:
+            #login to smtp server to send email
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.ehlo()
+            server.starttls()
+            gmail_user='getaholdofmenexient@gmail.com'
+            gmail_password = 'SuperSecretPassword1'
+            server.login(gmail_user, gmail_password)
+            #get username of sender so we know who is sending this message
+            sql = "SELECT username from users where userID = %s"
+            cursor.execute(sql, (sender,))
+            sender = cursor.fetchone()[0]
+            # Message = "!!!Urgent Message from john doe: " + 
+            message = "!!!Urgent message from " + str(sender) + " " +  str(content)
+            print (message)
+            server.sendmail(gmail_user, email, message)
+            print(gmail_user, email, message)
+            return True
+        except:
+            print("Email exceptioned out")
+            return False
 
-#     else:
-#         return False
+    else:
+        print("No data")
+        return False
 
 
 # def sendMessageViaText(content, sender, receiver):

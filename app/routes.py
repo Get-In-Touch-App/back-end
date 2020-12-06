@@ -47,7 +47,9 @@ def apiLogin():
             session['isLoggedIn'] = True;
             session['username'] = username; 
             session['userId'] = userId;
-            return {"Login":"Success"}
+            token = authentication.generateAndSaveToken(userId)
+            # print(token)
+            return {"Login":"Success", "token":token}
         else:
             return {"Error":"authenticationFailure"}
     else:
@@ -62,6 +64,12 @@ def sessiontest():
 
 @app.route('/getUsers', methods = ['POST', 'GET'])
 def getUsers():
+    if request.json and request.json['token']:
+        tokenIsValid = authentication.verifyTokenValid(request.json['token'])
+        if tokenIsValid:
+            return api.getUsers()
+        else:
+            return {"error":"Token is invalid"}
     if session and session['isLoggedIn']:
         return api.getUsers()
     else:
@@ -71,11 +79,24 @@ def getUsers():
 @app.route("/logout", methods = ['POST', 'GET'])
 def logout():
     session.clear()
+    if request.json and request.json['token']:
+        authentication.deleteToken(token)
+        return {"Logout": "Success"}
     return {"logout":"Success"}
 
 
 @app.route('/sendMessage', methods=['POST', 'GET'])
 def sendMessage():
+    if request.json and request.json['token']:
+        tokenIsValid = authentication.verifyTokenValid(request.json['token'])
+        if tokenIsValid:
+            message = request.json['message']
+            receiver = request.json['receiver']
+            sender = session['userId']
+            return api.sendMessage(message, sender, receiver)
+        else:
+            return {"error":"Token is invalid"}
+
     if session and session['isLoggedIn']:
         if(request.json and request.json['message'] and request.json['receiver']):
             message = request.json['message']
@@ -89,6 +110,13 @@ def sendMessage():
 
 @app.route('/getSentMessages/<int:userID>', methods=['POST', 'GET'])
 def getAllMessagesSentByUserID(userID):
+    if request.json and request.json['token']:
+        tokenIsValid = authentication.verifyTokenValid(request.json['token'])
+        if tokenIsValid:
+            return api.getSentMessages(userID)
+        else:
+            return {"Error":"Invalid token"}
+
     if session and session['isLoggedIn']:
         return api.getSentMessages(userID)
     else:
