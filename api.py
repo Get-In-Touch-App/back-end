@@ -10,7 +10,7 @@ def getUsers():
     returnData = cursor.fetchall()
     if returnData:
         items = [dict(zip([key[0] for key in cursor.description], row)) for row in returnData]
-        return str(items)
+        return {"getUsers":items}
     else:
         return {"Error":"no users available"}
 
@@ -37,7 +37,7 @@ def getSentMessages(userID):
     returnData = cursor.fetchall()
     if returnData:
         items = [dict(zip([key[0] for key in cursor.description], row)) for row in returnData]
-        return str(items)
+        return {"getSentMessages":items}
     else:
         return {"Error":"no users available"}
 
@@ -49,7 +49,7 @@ def getUserSendMethods(userID):
     returnData = cursor.fetchall()
     if returnData:
         items = [dict(zip([key[0] for key in cursor.description], row)) for row in returnData]
-        return str(items)
+        return {"getUserSendMethods":items}
     else:
         return {"Error":"no send methods available"}
 
@@ -61,7 +61,7 @@ def getAllSendMethods():
     returnData = cursor.fetchall()
     if returnData:
         items = [dict(zip([key[0] for key in cursor.description], row)) for row in returnData]
-        return str(items)
+        return {"getAllSendMethods":items}
     else:
         return {"Error":"no send methods available"}
 
@@ -74,7 +74,7 @@ def getUserInformation(userID):
     returnData = cursor.fetchall()
     if returnData:
         items = [dict(zip([key[0] for key in cursor.description], row)) for row in returnData]
-        return str(items)
+        return {"userInformation":items}
     else:
         return {"Error":"no data available"}
 
@@ -149,9 +149,15 @@ def sendMessageViaEmail(content, sender, receiver):
         return False
 
 
-# def sendMessageViaText(content, sender, receiver):
-#     db = database.getDB()
-#     cursor.db.cursor()
+def sendMessageViaText(content, sender, receiver):
+    db = database.getDB()
+    cursor.db.cursor()
+    sql = "SELECT phone from users where userID = %s"
+    cursor.execute(sql, (receiver,))
+    data = cursor.fetchone()
+    if data:
+        email = data[0]
+
 
 # def sendMessageViaVoiceCall(content, sender, receiver):
 #     db = database.getDB()

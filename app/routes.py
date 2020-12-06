@@ -161,11 +161,18 @@ def updateUserInformation():
                 twitter = request.json['twitter']
                 userId = tokenIsValid
                 api.editUserInformation(userId, email, phone, twitter)
+                return  api.getUserInformation(tokenIsValid)
+                
         else:
             return {"Error":"Invalid token"}
 
     if session and session['isLoggedIn']:
-        return api.getSentMessages(userID)
+        email = request.json['email']
+        phone = request.json['phone']
+        twitter = request.json['twitter']
+        userID = session['userId']
+        api.editUserInformation(userID, email, phone, twitter)
+        return  api.getUserInformation(userID)
     else:
         return {"Error":"User Not Logged In"}  
 

@@ -3,7 +3,7 @@ our software dependencies are:
     python 3.something
     mysql latest version (10.something) 
 #sql instructions: 
-#CREATE DATABASe getAholdOfMe
+#CREATE DATABASe getAholdOfMe;
 #CREATE USER 'getAholdOfMe'@'localhost' IDENTIFIED BY 'aholdGetter';
 #GRANT ALL PRIVILEGES ON getAholdOfMe.* TO 'getAholdOfMe'@'localhost';
 #copy all text in db.sql and paste it in the database window thing. 
@@ -17,8 +17,8 @@ our software dependencies are:
 #        $env:FLASK_ENV="development"
 #        flask run
 #    CMD 
-#        .\vent\Scripts\activate.bat
-#        set FLASK_APP=app.py
+#        .\venv\Scripts\activate.bat
+#        set FLASK_APP=getInTouch.py
 #        set FLASK_ENV=development
 #        flask run
 #UNIX:
@@ -29,6 +29,6 @@ our software dependencies are:
 #    export FLASK_ENV=development
 #run "pip install flask"
 #run "pip install mysql-connector-python"
-#run "pip install flask cors"
+#run "pip install flask_cors"
 #run "flask run"
     
