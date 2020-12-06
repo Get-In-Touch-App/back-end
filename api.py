@@ -56,20 +56,20 @@ def sendViaPreferredMethod(content, sender, receiver):
                 if availableFlags[x][2] & userFlagValue:
                     if availableFlags[x][1] == "email":
                         sendMessageViaEmail(content, sender, receiver)
-                    if availableFlags[x][1] == "text":
-                        sendMessageViaText(content, sender, receiver)
-                    if availableFlags[x][1] == "voice call":
-                        sendMessageViaVoiceCall(content, sender, receiver)
-                    if availableFlags[x][1] == "twitter DM":
-                        sendMessageViaTwitterDM(content, sender, receiver)
+                    # if availableFlags[x][1] == "text":
+                    #     sendMessageViaText(content, sender, receiver)
+                    # if availableFlags[x][1] == "voice call":
+                    #     sendMessageViaVoiceCall(content, sender, receiver)
+                    # if availableFlags[x][1] == "twitter DM":
+                    #     sendMessageViaTwitterDM(content, sender, receiver)
 
 
     
 
-# def sendMessageViaEmail(content, sender, receiver):
-#     db = database.getDB()
-#     cursor.db.cursor()
-#     sql = "SELECT "
+def sendMessageViaEmail(content, sender, receiver):
+    db = database.getDB()
+    cursor.db.cursor()
+    sql = "SELECT "
 
 # def sendMessageViaText(content, sender, receiver):
 #     db = database.getDB()
