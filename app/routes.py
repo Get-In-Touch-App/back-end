@@ -80,7 +80,7 @@ def getUsers():
 def logout():
     session.clear()
     if request.json and request.json['token']:
-        authentication.deleteToken(token)
+        authentication.deleteToken(request.json['token'])
         return {"Logout": "Success"}
     return {"logout":"Success"}
 
