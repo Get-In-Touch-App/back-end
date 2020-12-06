@@ -86,6 +86,7 @@ def logout():
 
 
 @app.route('/sendMessage', methods=['POST', 'GET'])
+@cross_origin()
 def sendMessage():
     if request.json and request.json['token']:
         tokenIsValid = authentication.verifyTokenValid(request.json['token'])
@@ -155,12 +156,13 @@ def updateUserInformation():
     if request.json and request.json['token']:
         tokenIsValid = authentication.verifyTokenValid(request.json['token'])
         if tokenIsValid:
-            if(request.json['email'] and request.json['phone'] and request.json['twitter']):
+            if(request.json['email'] and request.json['phone'] and request.json['twitter'] and request.json['contactMethodFlags']):
                 email = request.json['email']
                 phone = request.json['phone']
                 twitter = request.json['twitter']
+                contactMethodFlags = request.json['contactMethodFlags']
                 userId = tokenIsValid
-                api.editUserInformation(userId, email, phone, twitter)
+                api.editUserInformation(userId, email, phone, twitter, contactMethodFlags)
                 return  api.getUserInformation(tokenIsValid)
                 
         else:
@@ -171,7 +173,8 @@ def updateUserInformation():
         phone = request.json['phone']
         twitter = request.json['twitter']
         userID = session['userId']
-        api.editUserInformation(userID, email, phone, twitter)
+        contactMethodFlags = request.json['contactMethodFlags']
+        api.editUserInformation(userID, email, phone, twitter, contactMethodFlags)
         return  api.getUserInformation(userID)
     else:
         return {"Error":"User Not Logged In"}  

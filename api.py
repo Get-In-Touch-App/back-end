@@ -68,7 +68,7 @@ def getAllSendMethods():
 def getUserInformation(userID):
     db = database.getDB()
     cursor = db.cursor()
-    sql = "SELECT email, phone, twitter from users where userID = %s"
+    sql = "SELECT email, phone, twitter, contactMethodFlags from users where userID = %s"
     cursor.execute(sql, (userID,))
     print (sql, userID)
     returnData = cursor.fetchall()
@@ -78,11 +78,11 @@ def getUserInformation(userID):
     else:
         return {"Error":"no data available"}
 
-def editUserInformation(userId, email, phone, twitter):
+def editUserInformation(userId, email, phone, twitter, contactMethodFlags):
     db = database.getDB()
     cursor = db.cursor()
-    sql = "UPDATE users set email = %s, phone = %s, twitter = %s WHERE userID = %s"
-    cursor.execute(sql, (email, phone, twitter, userId))
+    sql = "UPDATE users set email = %s, phone = %s, twitter = %s, contactMethodFlags = %s WHERE userID = %s"
+    cursor.execute(sql, (email, phone, twitter, contactMethodFlags, userId))
     db.commit()
     return True  
 
